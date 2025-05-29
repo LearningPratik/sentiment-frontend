@@ -29,7 +29,7 @@ async function analyzeSentiment() {
   } catch (error) {
     console.error("Error:", error);
     showError(
-      "Failed to analyze sentiment. Make sure the API server is running on localhost:8000"
+      "Failed to analyze sentiment. Make sure the API server is running"
     );
   } finally {
     showLoading(false);
