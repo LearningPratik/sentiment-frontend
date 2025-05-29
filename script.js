@@ -1,5 +1,3 @@
-const API_URL = "http://localhost:8000";
-
 async function analyzeSentiment() {
   const textInput = document.getElementById("textInput");
   const text = textInput.value.trim();
@@ -14,7 +12,7 @@ async function analyzeSentiment() {
   hideResult();
 
   try {
-    const response = await fetch("http://localhost:8000/predict", {
+    const response = await fetch("https://sentiment-backend-k10v.onrender.com/predict", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
