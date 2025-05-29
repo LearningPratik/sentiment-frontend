@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentiment Analysis</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sentiment Analysis</h1>
+
+      <div class="input-group">
+        <label for="textInput">Enter your text:</label>
+        <textarea
+          id="textInput"
+          placeholder="Type something here to analyze its sentiment..."
+        ></textarea>
+      </div>
+
+      <button class="analyze-btn" onclick="analyzeSentiment()">
+        Analyze Sentiment
+      </button>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Analyzing...</p>
+      </div>
+
+      <div class="result" id="result"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
