@@ -12,7 +12,7 @@ async function analyzeSentiment() {
   hideResult();
 
   try {
-    const response = await fetch("hhttps://sentiment-backend-goga.onrender.com/predict", {
+    const response = await fetch("https://sentiment-backend-goga.onrender.com/predict", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
