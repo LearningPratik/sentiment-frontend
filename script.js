@@ -1,76 +1,26 @@
 async function analyzeSentiment() {
-  const textInput = document.getElementById("textInput");
-  const text = textInput.value.trim();
+            const text = document.getElementById("textInput").value;
+            const resultDiv = document.getElementById("result");
+            resultDiv.textContent = "Analyzing...";
 
-  if (!text) {
-    showError("Please enter some text to analyze.");
-    return;
-  }
+            try {
+                const response = await fetch("https://sentiment-backend-goga.onrender.com/predict", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ text: text })
+                });
 
-  // Show loading state
-  showLoading(true);
-  hideResult();
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    resultDiv.textContent = `Error: ${errorData.detail}`;
+                    return;
+                }
 
-  try {
-    const response = await fetch("https://sentiment-backend-goga.onrender.com/predict", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text: text }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    showResult(data);
-  } catch (error) {
-    console.error("Error:", error);
-    showError(
-      "Failed to analyze sentiment. Make sure the API server is running"
-    );
-  } finally {
-    showLoading(false);
-  }
-}
-
-function showResult(data) {
-  const resultDiv = document.getElementById("result");
-  const sentimentClass =
-    data.sentiment === "positive" ? "positive" : "negative";
-  const emoji = data.sentiment === "positive" ? "😊" : "😔";
-
-  resultDiv.innerHTML = `
-          <div class="sentiment-label">${emoji} ${data.sentiment}</div>
-      `;
-
-  resultDiv.className = `result ${sentimentClass} show`;
-}
-
-function showError(message) {
-  const resultDiv = document.getElementById("result");
-  resultDiv.innerHTML = `<div class="error">${message}</div>`;
-  resultDiv.className = "result show";
-}
-
-function showLoading(show) {
-  const loading = document.getElementById("loading");
-  const button = document.querySelector(".analyze-btn");
-
-  loading.style.display = show ? "block" : "none";
-  button.disabled = show;
-}
-
-function hideResult() {
-  const resultDiv = document.getElementById("result");
-  resultDiv.classList.remove("show");
-}
-
-// Allow Enter key to trigger analysis
-document.getElementById("textInput").addEventListener("keypress", function (e) {
-  if (e.key === "Enter" && e.ctrlKey) {
-    analyzeSentiment();
-  }
-});
+                const data = await response.json();
+                resultDiv.textContent = `Sentiment: ${data.sentiment}`;
+            } catch (error) {
+                resultDiv.textContent = `Request failed: ${error}`;
+            }
+        }
