@@ -12,7 +12,7 @@ async function analyzeSentiment() {
   hideResult();
 
   try {
-    const response = await fetch("https://sentiment-backend-k10v.onrender.com/predict", {
+    const response = await fetch("https://sentiment-backend-xjem.onrender.com/predict", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
